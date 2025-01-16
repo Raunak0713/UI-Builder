@@ -21,10 +21,10 @@ const GeneratedCode = () => {
   const { user } = useUser();
   const { theme } = useTheme();
 
-  // Early return if prompt is missing
-  if (prompt == null) {
-    return <div></div>;
-  }
+  // // Early return if prompt is missing
+  // if (prompt == null) {
+  //   return <div></div>;
+  // }
 
   useEffect(() => {
     // Ensure localStorage is only accessed on the client side

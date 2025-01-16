@@ -31,6 +31,12 @@ const BackgroundGrid = () => {
 
     return () => window.removeEventListener("resize", calculateCells);
   }, []);
+  
+  useEffect(() => {
+    return () => {
+      Object.values(timeoutRefs.current).forEach((timeout) => clearTimeout(timeout));
+    };
+  }, []);
 
   const handleCellHover = (index: number): void => {
     if (timeoutRefs.current[index]) {
@@ -53,11 +59,7 @@ const BackgroundGrid = () => {
     }, 250);
   };
 
-  useEffect(() => {
-    return () => {
-      Object.values(timeoutRefs.current).forEach((timeout) => clearTimeout(timeout));
-    };
-  }, []);
+ 
 
   return (
     <div className="graph-bg h-screen w-full overflow-hidden">
