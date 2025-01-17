@@ -24,7 +24,6 @@ const GeneratedCode = () => {
   const { user } = useUser();
   const { theme } = useTheme();
 
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const generatedCode = localStorage.getItem("generatedCode");
@@ -97,29 +96,50 @@ const GeneratedCode = () => {
           )}
         </h2>
         <div className="relative overflow-hidden rounded-lg">
-          <pre className="bg--200 text--800 p-4 overflow-x-auto whitespace-pre-wrap break-words relative">
+          <pre className="bg--200 text--800 p-4 whitespace-pre-wrap break-words relative w-full">
             {preview ? (
-              <div className='mt-10'>
+              <div className="mt-10">
                 <SeeLivePreview code={trimmedJSX} />
               </div>
             ) : (
-              <div className='mt-10'>
+              <div className="mt-10 w-full">
                 <LiveProvider code={trimmedJSX}>
-                  <LiveEditor disabled />
+                  {/* Add overflow-x-auto to the LiveEditor container */}
+                  <div className="overflow-x-auto w-full relative">
+                    <LiveEditor 
+                      className="w-full min-w-[300px] overflow-x-auto" 
+                      disabled 
+                      style={{ maxWidth: '100%', overflowX: 'auto' }} // Ensure the editor scrolls
+                    />
+                    {/* Move the Copy button inside the editor */}
+                    <Button
+                      onClick={handleCopy}
+                      disabled={preview}
+                      className={`absolute top-2 right-2 bg-black px-3 py-1 rounded-md hover:bg-gray-600 focus:outline-none
+                        ${
+                          theme === "dark"
+                            ? "text-white/90"
+                            : "text-black/60"
+                        }
+                      `}
+                    >
+                      {isCopied ? 'Copied!' : 'Copy'}
+                    </Button>
+                  </div>
                 </LiveProvider>
               </div>
             )}
             <div className="absolute top-2 right-2 flex gap-2 mr-2">
               <Button 
-              disabled={saved}
-              onClick={handleAddComponent}
-              className={`bg-gray-700 px-3 py-1 rounded-md hover:bg-gray-600 gap-2 focus:outline-none
+                disabled={saved}
+                onClick={handleAddComponent}
+                className={`bg-gray-700 px-3 py-1 rounded-md hover:bg-gray-600 gap-2 focus:outline-none
                   ${
                     theme === "dark"
                       ? "text-white/90"
                       : "text-black/60"
                   }
-              `}>
+                `}>
                 Add to Library
                 <CirclePlus />
               </Button>
@@ -139,28 +159,16 @@ const GeneratedCode = () => {
                     <ArrowRight />
                   </div>
                 ) : (
-                  <div className='flex gap-2 items-center'>
-                    Go to Live Preview
+                  <div className='p-0 flex gap-2 items-center'>
+                    Go to Preview
                     <ArrowRight />
                   </div>
                 )}
               </Button>
-              <Button
-                onClick={handleCopy}
-                disabled={preview}
-                className={`bg-gray-700 px-3 py-1 rounded-md hover:bg-gray-600 focus:outline-none
-                   ${
-                  theme === "dark"
-                    ? "text-white/90"
-                    : "text-black/60"
-                  }
-                `}
-              >
-                {isCopied ? 'Copied!' : 'Copy'}
-              </Button>
             </div>
           </pre>
         </div>
+
         <Button
           onClick={() => router.push("/")}
           className={`mt-6 md:mt-10 text-lg md:px-8 md:py-6 font-semibold mx-auto bg-gray-700 hover:bg-gray-600 flex items-center

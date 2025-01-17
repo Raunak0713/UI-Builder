@@ -65,7 +65,9 @@ const ComponentPage = () => {
               
               <div className="overflow-hidden max-h-40 mt-2">
                 <LiveProvider code={component.jsxCode}>
-                  <LiveEditor disabled className="text-sm" />
+                  <div suppressHydrationWarning>
+                    <LiveEditor disabled className="text-sm" />
+                  </div>
                 </LiveProvider>
               </div>
             </Card>
