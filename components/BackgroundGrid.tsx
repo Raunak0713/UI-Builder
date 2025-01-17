@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface TimeoutRefs {
   [key: number]: NodeJS.Timeout;
@@ -74,7 +74,7 @@ const BackgroundGrid = () => {
         {Array.from({ length: gridCells }).map((_, i) => (
           <div
             key={i}
-            className={`grid-cell ${hoveredCells.has(i) ? "bg-orange-300/20" : ""}`}
+            className={`grid-cell ${hoveredCells.has(i) ? "bg--300/20" : ""}`}
             onMouseEnter={() => handleCellHover(i)}
             style={{ width: CELL_SIZE, height: CELL_SIZE }}
           />
@@ -85,4 +85,4 @@ const BackgroundGrid = () => {
 }
 
 
-export { BackgroundGrid }
+export { BackgroundGrid };
